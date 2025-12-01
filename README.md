@@ -1,13 +1,4 @@
-# MobileRecommenderSystem 📲
-
-#### Try it out by yourself! - https://mobile-recommender-system-gyanprakashkushwaha.streamlit.app/
----
-
-# Demo
-
-https://github.com/GyanPrakashkushwaha/MobileRecommenderSystem/assets/127115588/2cda816b-169c-4383-8c7e-c980be27a2ae
-
-
+# MobileRecommenderSystem 
 ## About
 
 The model promptly showcase the most closely related mobile phones based on selection.The recommendation system leverages similarity metrics to identify and present the mobile phones with the highest similarity to the chosen device, enabling to explore alternatives that align with the preferences and requirements.
