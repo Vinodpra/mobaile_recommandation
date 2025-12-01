@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Recommender System 📲</title>
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3a0ca3;
+            --accent-color: #4cc9f0;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --success-color: #4bb543;
+            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --card-hover-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--dark-color);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            border-radius: 0 0 20px 20px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header h1 {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+        
+        .guide-card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            border-left: 4px solid var(--accent-color);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .guide-card .card-title {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .guide-icon {
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            margin-right: 0.5rem;
+        }
+        
+        .form-container {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .form-label {
+            font-weight: 600;
+            color: var(--secondary-color);
+        }
+        
+        .form-select {
+            border-radius: 8px;
+            padding: 0.75rem;
+            border: 1px solid #dee2e6;
+            transition: all 0.3s ease;
+        }
+        
+        .form-select:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 0.2rem rgba(76, 201, 240, 0.25);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            border: none;
+            border-radius: 8px;
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(67, 97, 238, 0.3);
+        }
+        
+        .mobile-card {
+            height: 100%;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            border: none;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+        
+        .mobile-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--card-hover-shadow);
+        }
+        
+        .mobile-card img {
+            max-height: 220px;
+            object-fit: contain;
+            padding: 1rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .mobile-card:hover img {
+            transform: scale(1.05);
+        }
+        
+        .card-body {
+            padding: 1.25rem;
+        }
+        
+        .card-title {
+            font-weight: 600;
+            color: var(--secondary-color);
+            margin-bottom: 0.75rem;
+            font-size: 1rem;
+            height: 2.5rem;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+        
+        .rating {
+            color: #ffc107;
+            margin-bottom: 0.5rem;
+        }
+        
+        .price {
+            font-weight: 700;
+            color: var(--success-color);
+            font-size: 1.1rem;
+        }
+        
+        .section-title {
+            color: var(--secondary-color);
+            font-weight: 700;
+            margin: 2rem 0 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent-color);
+            display: inline-block;
+        }
+        
+        .selected-mobile {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            padding: 1rem 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .selected-mobile h4 {
+            margin: 0;
+            color: var(--primary-color);
+        }
+        
+        .selected-mobile .badge {
+            background-color: var(--accent-color);
+            font-size: 0.8rem;
+            margin-left: 1rem;
+        }
+        
+        .footer {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            color: white;
+            padding: 2rem 0;
+            border-radius: 20px 20px 0 0;
+            margin-top: 3rem;
+            text-align: center;
+        }
+        
+        .footer p {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer strong {
+            color: var(--accent-color);
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .header {
+                padding: 1.5rem 0;
+                border-radius: 0 0 15px 15px;
+            }
+            
+            .header h1 {
+                font-size: 1.75rem;
+            }
+            
+            .form-container, .guide-card {
+                padding: 1rem;
+            }
+            
+            .mobile-card img {
+                max-height: 180px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1><i class="fas fa-mobile-alt me-2"></i>Mobile Recommender System</h1>
+            <p class="mb-0">Find your perfect phone with AI-powered recommendations</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="guide-card">
+            <h5 class="card-title"><i class="fas fa-info-circle guide-icon"></i>How It Works</h5>
+            <div class="row">
+                <div class="col-md-6">
+                    <p><strong>Step 1:</strong> Choose a mobile phone from the dropdown list that matches your preferences.</p>
+                    <p><strong>Step 2:</strong> Click the <span class="badge bg-primary">Recommend</span> button to get personalized suggestions.</p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>Step 3:</strong> Explore the recommended phones and alternatives based on similarity metrics.</p>
+                    <p><strong>Pro Tip:</strong> Click the button again with the same selection to discover more options in the "Other Variety" section.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-container">
+            <form method="post">
+                {% csrf_token %}
+                <div class="row align-items-end">
+                    <div class="col-md-8">
+                        <label for="mobile" class="form-label">
+                            <i class="fas fa-search me-1"></i>Select Your Preferred Mobile
+                        </label>
+                        <select name="mobile" id="mobile" class="form-select">
+                            {% for m in mobiles %}
+                                <option value="{{ m }}" {% if m == selected_mobile %}selected{% endif %}>
+                                    {{ m }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-4 mt-3 mt-md-0">
+                        <button type="submit" class="btn btn-primary w-100 pulse">
+                            <i class="fas fa-robot me-2"></i>Get Recommendations
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        {% if selected_mobile %}
+            <div class="selected-mobile">
+                <h4><i class="fas fa-check-circle me-2 text-success"></i>Selected Mobile:</h4>
+                <span class="ms-2 fw-bold text-primary">{{ selected_mobile }}</span>
+                <span class="badge">Currently Viewing</span>
+            </div>
+        {% endif %}
+
+        {% if recommended %}
+            <h3 class="section-title"><i class="fas fa-star me-2"></i>Recommended For You</h3>
+            <p class="text-muted mb-4">Phones similar to your selection based on features and user preferences</p>
+
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 g-4">
+                {% for item in recommended %}
+                <div class="col">
+                    <div class="card mobile-card">
+                        <div class="position-relative">
+                            <img src="{{ item.img }}" class="card-img-top" alt="{{ item.name }}">
+                            <span class="position-absolute top-0 end-0 bg-primary text-white px-2 py-1 m-2 rounded-pill small">
+                                <i class="fas fa-fire me-1"></i>Hot
+                            </span>
+                        </div>
+                        <div class="card-body text-center">
+                            <h6 class="card-title">{{ item.name }}</h6>
+                            <div class="rating">
+                                {% with ''|center:item.rating as range %}
+                                {% for _ in range %}
+                                    <i class="fas fa-star"></i>
+                                {% endfor %}
+                                {% endwith %}
+                                <span class="text-muted ms-1">({{ item.rating }})</span>
+                            </div>
+                            <p class="price mb-0">₹{{ item.price }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if other_variety %}
+            <h3 class="section-title mt-5"><i class="fas fa-random me-2"></i>Other Varieties</h3>
+            <p class="text-muted mb-4">Alternative options that might interest you</p>
+
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 g-4">
+                {% for item in other_variety %}
+                <div class="col">
+                    <div class="card mobile-card">
+                        <img src="{{ item.img }}" class="card-img-top" alt="{{ item.name }}">
+                        <div class="card-body text-center">
+                            <h6 class="card-title">{{ item.name }}</h6>
+                            <div class="rating">
+                                {% with ''|center:item.rating as range %}
+                                {% for _ in range %}
+                                    <i class="fas fa-star"></i>
+                                {% endfor %}
+                                {% endwith %}
+                                <span class="text-muted ms-1">({{ item.rating }})</span>
+                            </div>
+                            <p class="price mb-0">₹{{ item.price }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="footer">
+            <p>Thank You for visiting <i class="fas fa-smile-beam ms-1"></i></p>
+            <p>Made with <i class="fas fa-heart text-danger mx-1"></i> by <strong>Gyan Prakash Kushwaha</strong></p>
+            <p class="mt-3 small opacity-75">
+                <i class="fas fa-code me-1"></i>Powered by AI Recommendation Algorithms
+            </p>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
